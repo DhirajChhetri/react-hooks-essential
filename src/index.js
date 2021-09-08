@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function App(props){
-  const [status, setStatus] = useState("Not Delivered")
+  const [checked, setChecked] = useState(false)
   return (
     <>
-    <div> hello {status}</div>
-    <button  onClick = {()=> setStatus("Delivered")}>change status</button>
+    <input type="checkbox" value ={checked} onChange = {()=> setChecked(!checked)} />
+    <p> {checked ?"checked":"not checked"}</p>
     
     </>
   )
