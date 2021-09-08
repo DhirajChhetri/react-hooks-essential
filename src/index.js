@@ -3,29 +3,32 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 function App( ){
-  const [winner, setWinner] = useState('william');
-  const [admin, setAdmin]= useState(false);
-  useEffect(()=>{
-    document.title=`congrats ${winner}`
-    console.log(`The winner is  ${winner}`)
-  }, [winner]);
+ const [data, setData]= useState([]);
 
-  useEffect(()=>{
-    console.log( `This is admin ${admin}`)
-  },[admin])
-  
-  return (
-  <>
-      <section>
-        <p> congratulations {winner}</p>
-        <button onClick={()=> setWinner("Joe")}>change winner</button>
+ useEffect(()=>{
+   fetch(`https://api.github.com/users`)
+   .then((res)=> res.json())
+   .then(setData);
+ },[]);
 
-        <p>{admin?"logged in":"guest"}</p>
-        <button onClick={()=>setAdmin(!admin)}> setAdmin</button>
-      </section>
+ if(data){
+    return (
+      <>
+      <ul>
+        {data.map(({id, login})=>(
+          <li key={id}>{login}</li>
+    ))}
+      </ul>
+      <button onClick={()=> setData([])}>clear data</button>
+      </>
+    )
+ }
 
-  </>
-  )
+ return (
+   <>
+   <div>No data </div>
+   </>
+ )
 }
 ReactDOM.render(
   <React.StrictMode>
