@@ -1,30 +1,31 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {FaStar} from 'react-icons/fa'
 
+function App( ){
+  const [winner, setWinner] = useState('william');
+  const [admin, setAdmin]= useState(false);
+  useEffect(()=>{
+    document.title=`congrats ${winner}`
+    console.log(`The winner is  ${winner}`)
+  }, [winner]);
 
-const createArray = (length)=> [...Array(length)]
-function Star({selected=false, onSelect}) {
-  return <FaStar onClick={onSelect} color ={selected?"red":"grey"}/>
-}
-function StarRating({totalStars=5}){
-  const [selectedStars,setSelectedStars]= useState(0)
+  useEffect(()=>{
+    console.log( `This is admin ${admin}`)
+  },[admin])
+  
   return (
   <>
-  {createArray(totalStars).map((n,i)=> <Star 
-  key={i}
-  selected ={selectedStars > i} 
-  onSelect ={()=> setSelectedStars(i+1)}
-/>
-)
-}
-<p> {selectedStars } of {totalStars}</p>
-</>
+      <section>
+        <p> congratulations {winner}</p>
+        <button onClick={()=> setWinner("Joe")}>change winner</button>
+
+        <p>{admin?"logged in":"guest"}</p>
+        <button onClick={()=>setAdmin(!admin)}> setAdmin</button>
+      </section>
+
+  </>
   )
-}
-function App(props){
-  return <StarRating totalStars={10}/>
 }
 ReactDOM.render(
   <React.StrictMode>
